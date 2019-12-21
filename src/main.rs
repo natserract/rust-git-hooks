@@ -1,3 +1,8 @@
+
+extern crate git2;
+
+mod lib;
+
 fn main() {
-    println!("Hello, world!");
+    lib::get_fullcommit_log()
 }

@@ -9,4 +9,4 @@ edition = "2018"
 [dependencies]
 git2 = "0.10"
 time = "0.1"
-colored = "1.9"
+futures = "0.3.1"

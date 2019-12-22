@@ -3,9 +3,9 @@ extern crate git2;
 
 mod lib;
 
+use lib::merge_all_hooks;
+use futures::executor::block_on;
+
 fn main() {
-    lib::get_fullcommit_log();
-    lib::create_new_branch();
-    lib::rename_branch();
-    lib::delete_branch();
+    block_on(merge_all_hooks())
 }

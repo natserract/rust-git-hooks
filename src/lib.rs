@@ -1,6 +1,10 @@
 #![allow(unused_variables)]
 #![allow(unused_imports)]
 
+use std::thread::sleep;
+use std::time::Duration;
+use futures::future::join4;
+
 use git2::{Oid, Repository, ObjectType, Commit, BranchType};
 
 // -> Open & Select Your Repository
@@ -22,7 +26,10 @@ fn convert_to_str(target: Option<&str>) -> &str {
 }
 
 // -> Commit Logging
-pub fn get_fullcommit_log() {
+async fn get_fullcommit_log() {
+    let timeout = Duration::from_secs(1);
+    sleep(timeout);
+
     let repo = open_repo();
     let commit = repo.find_commit(initial_head()).unwrap();
     
@@ -57,7 +64,10 @@ pub fn get_fullcommit_log() {
     )
 }
 
-pub fn create_new_branch() {
+async fn create_new_branch() {
+    let timeout = Duration::from_secs(3);
+    sleep(timeout);
+
     let repo = open_repo();
     let commit = repo.find_commit(initial_head()).unwrap();
     let mut branch = repo.branch("test_branch", &commit, true).unwrap();
@@ -70,7 +80,10 @@ pub fn create_new_branch() {
 }
 
 
-pub fn rename_branch() {
+async fn rename_branch() {
+    let timeout = Duration::from_secs(5);
+    sleep(timeout);
+
     let repo = open_repo();
     let commit = repo.find_commit(initial_head()).unwrap();
     let mut find_branch = repo.find_branch("test_branch",BranchType::Local).unwrap();
@@ -83,7 +96,10 @@ pub fn rename_branch() {
     println!("Branch has been succesfully renamed! If you wanna check type command git branch -a");
 }
 
-pub fn delete_branch() {
+async fn delete_branch() {
+    let timeout = Duration::from_secs(7);
+    sleep(timeout);
+
     let repo = open_repo();
     let commit = repo.find_commit(initial_head()).unwrap();
     let mut find_branch = repo.find_branch("test_branch_1",BranchType::Local).unwrap();
@@ -93,3 +109,14 @@ pub fn delete_branch() {
     println!("Branch has been succesfully deleted! If you wanna check type command git branch -a");
 }
 
+
+pub async fn merge_all_hooks() {
+    let commit_log = get_fullcommit_log();
+    let new_branch = create_new_branch();
+    let rename_branch = rename_branch();
+    let delete_branch = delete_branch();
+  
+    let race_all = join4(commit_log, new_branch, rename_branch, delete_branch);
+    race_all.await;
+    
+}

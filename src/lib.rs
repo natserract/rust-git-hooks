@@ -57,16 +57,39 @@ pub fn get_fullcommit_log() {
     )
 }
 
-
-// -> Repo Logging
-pub fn get_fullrepo_log() {
+pub fn create_new_branch() {
     let repo = open_repo();
     let commit = repo.find_commit(initial_head()).unwrap();
     let mut branch = repo.branch("test_branch", &commit, true).unwrap();
-    // let mut find = repo.find_branch("test_branch",BranchType::Local).unwrap();
-    let mut b1 = branch.rename("test_branch_1", true).unwrap();
-    b1.set_upstream(Some("master")).unwrap();
-    b1.upstream().unwrap();
 
-    assert_eq!(b1.name().unwrap(), Some("test_branch_1"))
+    // -> sets the default remote branch
+    branch.set_upstream(Some("master")).unwrap();
+    branch.upstream().unwrap();
+
+    println!("Branch has been succesfully created! If you wanna check type command git branch -a");
 }
+
+
+pub fn rename_branch() {
+    let repo = open_repo();
+    let commit = repo.find_commit(initial_head()).unwrap();
+    let mut find_branch = repo.find_branch("test_branch",BranchType::Local).unwrap();
+    let mut renamed_branch = find_branch.rename("test_branch_1", true).unwrap();
+
+    // -> sets the default remote branch
+    renamed_branch.set_upstream(Some("master")).unwrap();
+    renamed_branch.upstream().unwrap();
+
+    println!("Branch has been succesfully renamed! If you wanna check type command git branch -a");
+}
+
+pub fn delete_branch() {
+    let repo = open_repo();
+    let commit = repo.find_commit(initial_head()).unwrap();
+    let mut find_branch = repo.find_branch("test_branch_1",BranchType::Local).unwrap();
+
+    find_branch.delete().unwrap();
+
+    println!("Branch has been succesfully deleted! If you wanna check type command git branch -a");
+}
+

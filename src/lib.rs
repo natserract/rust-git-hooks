@@ -1,11 +1,10 @@
 #![allow(unused_variables)]
-#![allow(unused_imports)]
 
 use std::thread::sleep;
 use std::time::Duration;
 use futures::future::join4;
 
-use git2::{Oid, Repository, ObjectType, Commit, BranchType};
+use git2::{Oid, Repository, BranchType};
 
 // -> Open & Select Your Repository
 fn open_repo() -> Repository {

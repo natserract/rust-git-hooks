@@ -9,7 +9,7 @@ Git hooks are scripts that Git executes before or after events such as: commit, 
 
 Every Git repository has a `.git/hooks` folder with a script for each hook you can bind to. You're free to change or update these scripts as necessary, and Git will execute them when those events occur.
 
-Here's a full list of hooks you can attach scripts to: [git hooks lists](https://githooks.com/)
+Here's a full list of hooks you can attach scripts to: [git hooks lists](https://githooks.com/).
 
 ## Environments
 

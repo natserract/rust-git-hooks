@@ -1,8 +1,4 @@
 # Rust Git Hooks
-Writing git hooks using Rust
-
-## Overview
-
 Git hooks are scripts that Git executes before or after events such as: commit, push, and receive. Git hooks are a built-in feature - no need to download anything. Git hooks are run locally.
 
 ### How do git hooks work?
